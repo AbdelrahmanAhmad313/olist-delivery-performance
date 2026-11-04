@@ -29,7 +29,7 @@ for name, filename in files.items():
     data[name] = pd.read_csv(RAW_DATA_PATH / filename)
     
 for name in files:
-    print(data[name].shape)
+    # print(data[name].shape)
     print(data[name].columns)
-    print(data[name].dtypes)
+    # print(data[name].dtypes)
     
