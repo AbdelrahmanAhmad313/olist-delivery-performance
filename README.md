@@ -44,7 +44,6 @@ Power BI Executive Dashboard & DAX Measures
 2. **Date Window Selection:** Restricted analysis to `2017-02-01` through `2018-08-31` to exclude the January 2017 platform ramp-up and ensure complete monthly cohorts.
 
 3. **Fact Table Design (`sql/02_fact_orders.sql`):** Built a consolidated fact table with a grain of **1 row per `order_id`**, computing key delivery durations:
-
    - **Seller Handling Duration:** `approved_at` → `carrier_delivery_start_date` (Average: ~2.7 days).
    - **Carrier Transit Duration:** `carrier_delivery_start_date` → `delivered_customer_date` (Average: ~9.3 days).
    - **Lateness Flag (`is_late`):** Identifies orders where `delivered_customer_date` exceeds `estimated_delivery_date`.
@@ -53,14 +52,14 @@ Power BI Executive Dashboard & DAX Measures
 
 ## 📈 Core Key Performance Indicators (KPIs)
 
-| KPI | Definition | Baseline Value |
-|---|---|---:|
-| **Late Rate** | Delivered orders arriving after the estimated date | ~8.5%–10% |
-| **On-Time Rate** | Delivered orders arriving on or before the estimated date | ~90%–91.5% |
-| **Avg Seller Handling** | Mean days for sellers to hand off orders to carriers | ~2.7 days (Median: 2) |
-| **Avg Carrier Transit** | Mean days for carriers to transport orders to customers | ~9.3 days (Median: 7) |
-| **Avg Review Score** | Mean customer review score (1–5 scale) | ~4.1 / 5.0 |
-| **Low Review Rate** | Reviewed orders receiving 1 or 2 stars | ~15%–18% |
+| KPI                     | Definition                                                |        Baseline Value |
+| ----------------------- | --------------------------------------------------------- | --------------------: |
+| **Late Rate**           | Delivered orders arriving after the estimated date        |             ~8.5%–10% |
+| **On-Time Rate**        | Delivered orders arriving on or before the estimated date |            ~90%–91.5% |
+| **Avg Seller Handling** | Mean days for sellers to hand off orders to carriers      | ~2.7 days (Median: 2) |
+| **Avg Carrier Transit** | Mean days for carriers to transport orders to customers   | ~9.3 days (Median: 7) |
+| **Avg Review Score**    | Mean customer review score (1–5 scale)                    |            ~4.1 / 5.0 |
+| **Low Review Rate**     | Reviewed orders receiving 1 or 2 stars                    |              ~15%–18% |
 
 ---
 
@@ -168,7 +167,7 @@ olist-delivery-performance/
 └── README.md
 ```
 
-*Note: Adjust the folder names above to match the actual repository structure.*
+_Note: Adjust the folder names above to match the actual repository structure._
 
 ---
 

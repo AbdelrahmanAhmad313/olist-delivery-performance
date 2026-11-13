@@ -18,7 +18,7 @@
 | **Numerator**         | `COUNT(order_id) WHERE days_late > 0`                                                       |
 | **Denominator**       | `COUNT(order_id) WHERE order_status = 'delivered'`                                          |
 | **Grain**             | One row per delivered order (`fact_orders`)                                                 |
-| **Filters**           | Date window: [DEFINE YOUR DEFENSIBLE WINDOW HERE]; exclude orders with null delivery dates  |
+| **Filters**           | Date window: 2017-02-01 to 2018-08-31; exclude orders with null delivery dates  |
 | **Caveats**           | Estimated date set by platform — "late" may reflect optimistic promise, not carrier failure |
 
 ### 2. On-Time Rate
@@ -84,7 +84,7 @@
 | **Numerator**         | `COUNT(order_id) WHERE days_late > 0` grouped by `seller_state`, `customer_state`   |
 | **Denominator**       | `COUNT(order_id)` grouped by `seller_state`, `customer_state`                       |
 | **Grain**             | One row per delivered order, aggregated to lane level                               |
-| **Filters**           | Min 30 orders per lane (noise filter); same date window                             |
+| **Filters**           | Min 100 orders per lane (noise filter); same date window                             |
 | **Caveats**           | Lane = state-to-state; city-level not available; volume varies widely               |
 
 ### 8. Seller Late Rate (Ranked, Min 50 Orders)
@@ -124,29 +124,19 @@
 
 ## Date Window Decision (fill in after data audit)
 
-| Item              | Value                                                       |
-| ----------------- | ----------------------------------------------------------- |
-| **Start date**    | [e.g., 2017-01-01 — after sparse early months]              |
-| **End date**      | [e.g., 2018-08-31 — before truncated tail]                  |
-| **Justification** | [Explain: month completeness, order volume stability, etc.] |
+| Item              | Value                                                      |
+| ----------------- | ---------------------------------------------------------- |
+| **Start date**    | 2017-02-01                                                 |
+| **End date**      | 2018-08-31                                                 |
+| **Justification** | 2017-01 (800 orders) is a ramp-up month; 2017-02 onward shows stable volume (1,780–7,544 orders/month). 2018-08 (6,511 orders) is the last complete month before data cutoff. |
 
 ## Minimum Volume Thresholds (fill in after data audit)
 
-| Level                  | Threshold                                                   | Reason            |
-| ---------------------- | ----------------------------------------------------------- | ----------------- |
-| **Lane (state→state)** | [e.g., 30 orders]                                           | [Why this number] |
-| **Seller**             | [e.g., 50 orders]                                           | [Why this number] |
-| **Start date**         | [e.g., 2017-01-01 — after sparse early months]              |
-| **End date**           | [e.g., 2018-08-31 — before truncated tail]                  |
-| **Justification**      | [Explain: month completeness, order volume stability, etc.] |
-
-## Minimum Volume Thresholds (fill in after data audit)
-
-| Level                  | Threshold          | Reason            |
-| ---------------------- | ------------------ | ----------------- |
-| **Lane (state→state)** | [e.g., 30 orders]  | [Why this number] |
-| **Seller**             | [e.g., 50 orders]  | [Why this number] |
-| **Category**           | [e.g., 100 orders] | [Why this number] |
+| Level                  | Threshold | Entities Below | Reason |
+| ---------------------- | --------- | -------------- | ------ |
+| **Lane (state→state)** | 100 orders | 22 lanes | Raised from 30 to ensure statistical reliability for late-rate comparisons |
+| **Seller**             | 50 orders | 2,666 sellers | Keeps enough sellers for ranked analysis while filtering noise |
+| **Category**           | 100 orders | 3 categories | Only 3 categories fall below; ensures per-category KPIs are meaningful |
 
 ---
 
